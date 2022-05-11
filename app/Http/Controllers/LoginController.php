@@ -26,8 +26,13 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
 
-        if(Auth::attempt($data)){
+        if(Auth::attempt($data) && Auth::user()->level == '1'){
+            return redirect(route('admin.index'));
+            
+        }else if(Auth::attempt($data) && Auth::user()->level == '0')
+        {
             return redirect(route('todos.index'));
+            
         }else{
             return redirect()->back();
         }

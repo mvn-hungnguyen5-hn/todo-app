@@ -23,14 +23,6 @@ class TodoRepository extends BaseRepository implements TodoRepositoryInterface
     public function getListTodoByCondition($request)
     {
         $searchCondition = $request->input('search');
-        // $listTodo = Todo::where(function ($query) use ($searchCondition) {
-        //     $query->where('name', 'like', '%' . $searchCondition . '%')
-        //         ->orWhere('description', 'like', '%' . $searchCondition . '%');
-        // });
-        // if ($request->sort && $request->direction) {
-        //     $listTodo = $listTodo->orderBy($request->sort, $request->direction);
-        // };
-        // $listTodo = $listTodo->paginate(5);
         $query = $this->model->select('todos.*');
         if($request->search) {
             $query->where('name', 'like', '%' . $searchCondition . '%')

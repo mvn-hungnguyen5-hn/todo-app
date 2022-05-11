@@ -16,14 +16,14 @@
             <label>Username </label>
             <input type="text" name="name" class="form-control">
             @error('name')
-               <div class="error">{{ $message }}</div>
+               <div class="text-danger">{{ $message }}</div>
             @enderror
           </div>
           <div class="form-group">
             <label>Password </label>
             <input type="password" name="password" class="form-control" >
             @error('password')
-               <div class="error">{{ $message }}</div>
+               <div class="text-danger">{{ $message }}</div>
             @enderror
           </div>
         
