@@ -60,6 +60,7 @@ class LoginController extends Controller
         $user->email = $request->input('email');
         $user->level = 0;
         $user->password = bcrypt($request->input('password'));
+        //save
         $user->save();
         return redirect()->route('login');
     }
