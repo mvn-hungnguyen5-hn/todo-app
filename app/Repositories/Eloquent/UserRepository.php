@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Eloquent\BaseRepository;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -33,6 +34,22 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         if($request->sort && $request->direction) {
             $query->orderBy($request->sort, $request->direction);
         }
+        return $query->paginate(5);
+    }
+
+    //get all task of all user
+    public function getAllUserTask($request)
+    {
+        $searchCondition = $request->input('search');
+
+        $query = DB::table('users')
+        ->leftJoin('todos','users.id', '=', 'todos.user_id')
+        ->select('users.id as id_user' ,'users.name as user_name', 'todos.id as id_task', 'todos.name as task_name');
+        if($request->search){
+            $query->where('users.name', 'like', '%' . $searchCondition . '%')
+            ->orWhere('todos.name', 'like', '%' . $searchCondition . '%');
+        }
+        $query->orderBy('id_user', 'ASC');
         return $query->paginate(5);
     }
 }

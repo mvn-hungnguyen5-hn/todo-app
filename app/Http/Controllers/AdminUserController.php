@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Todo;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserPostRequest;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use Exception;
 class AdminUserController extends Controller
 {
     private $userRepository;
@@ -59,4 +61,23 @@ class AdminUserController extends Controller
         $user = User::find($id);
         return view('todos.admin.show-user', compact('user'));
     }
+
+    //'getAllTask'])->name('admin.all-task');
+    public function getAllTask(Request $request)
+    {
+        $listUserTask = $this->userRepository->getAllUserTask($request);
+        return view('todos.admin.all-task', compact('listUserTask'));
+    }
+
+    //destroy task by task id
+    public function processDestroyUserTask($id = null)
+    {     
+        $task = Todo::find($id);
+        if(!$task){
+            return redirect()->back()->with('error', 'Task không tồn tại');
+        }
+        $task->delete();
+        return redirect()->back()->with('success', 'Xóa task thành công');
+    }
 }
+

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterAcountRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,13 +16,8 @@ class LoginController extends Controller
     }
 
     //xu li check dang nhap 
-    public function processLogin(Request $request)
+    public function processLogin(LoginRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'password' => 'required'
-        ]);
-
         $data = [
             'name' => $request->name,
             'password' => $request->password,
@@ -34,7 +31,8 @@ class LoginController extends Controller
             return redirect(route('todos.index'));
             
         }else{
-            return redirect()->back();
+            //can not login
+            return redirect()->back()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
         }
 
     }
@@ -47,22 +45,16 @@ class LoginController extends Controller
     }
 
     //xu li dang ki
-    public function processRegister(Request $request){
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required'
-        ]);
-    
-        //create User and fill data
+    public function processRegister(RegisterAcountRequest $request){
+        //create User and set data
         $user = new User();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->level = 0;
         $user->password = bcrypt($request->input('password'));
-        //save user hhhhhhh
+        //save user
         $user->save();
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Đăng ký tài khoản thành công');
     }
     //xu li logout
     public function logout()

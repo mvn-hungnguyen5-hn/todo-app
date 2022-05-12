@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/login-test', function () {
+    return view('todos.login-test');
 });
 Route::get('login', [LoginController::class, 'showLoginForm']);
 Route::post('login', [LoginController::class, 'processLogin'])->name('login');
@@ -34,6 +34,8 @@ Route::group(['prefix'=>'admin', 'middleware' => 'verify.login'],function(){
     Route::put('edit-user/{id}', [AdminUserController::class, 'update'])->name('admin.update-user');
     Route::delete('destroy-user/{id}', [AdminUserController::class, 'destroy'])->name('admin.destoy-user');
     Route::get('show-user{id}', [AdminUserController::class, 'show'])->name('admin.show-user');
+    Route::get('all-user-task', [AdminUserController::class, 'getAllTask'])->name('admin.all-task');
+    Route::delete('delete-user-task/{id?}',[AdminUserController::class, 'processDestroyUserTask'])->name('admin.destoy-task');
 });
 // Route::get('admin/list-user', [AdminUserController::class, 'index'])->name('admin.index');
 // Route::get('admin/create-user', [AdminUserController::class, 'showCreateUserForm'])->name('show.create-user');

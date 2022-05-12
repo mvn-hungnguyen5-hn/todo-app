@@ -15,6 +15,11 @@
         </div>
         <br>
         <div>
+            <form id ="list-task-all" action="{{route('admin.all-task')}}" method="get">
+                <button type="submit" class="btn btn-info">All Task</button>
+            </form>
+        </div>
+        <div>
             <form id ="create" action="{{route('show.create-user')}}" method="get">
                 <button type="submit" class="btn btn-info">New User</button>
             </form>

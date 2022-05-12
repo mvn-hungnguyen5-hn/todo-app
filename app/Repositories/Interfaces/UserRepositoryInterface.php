@@ -6,4 +6,5 @@ interface UserRepositoryInterface
 {
     public function getAllUser();
     public function getListUserByCondition($request);
+    public function getAllUserTask($request);
 }
