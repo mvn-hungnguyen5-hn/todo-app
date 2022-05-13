@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>View user infomation</h1>
+    @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-block"> 
+         <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <p>Name: {{$user->name}}</p>
     <p>Email: {{$user->email}}</p>
 </body>

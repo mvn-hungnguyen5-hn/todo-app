@@ -8,27 +8,43 @@
 <body>
     <div class="container">
         <h1>List User</h1>
-        <div>
-            <form id ="logout" action="{{route('logout')}}" method="get">
-                <button type="submit" class="btn btn-success">Logout</button>
-            </form>
-        </div>
-        <br>
-        <div>
-            <form id ="list-task-all" action="{{route('admin.all-task')}}" method="get">
-                <button type="submit" class="btn btn-info">All Task</button>
-            </form>
-        </div>
-        <div>
-            <form id ="create" action="{{route('show.create-user')}}" method="get">
-                <button type="submit" class="btn btn-info">New User</button>
-            </form>
+                @if ($message = Session::get('error'))
+                    <div class="alert alert-danger alert-block"> 
+                     <strong>{{ $message }}</strong>
+                    </div>
+                    @endif
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success alert-block">
+                    <strong>{{ $message }}</strong>
+                </div>
+                @endif
+            <div class="row">
+                <div class="col-lg-10"></div>
+                <div class="col-lg-2">
+                    <form id ="logout" action="{{route('logout')}}" method="get">
+                        <button type="submit" class="btn btn-secondary btn-sm">Logout</button>
+                    </form>
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <form id ="list-task-all" action="{{route('admin.all-task')}}" method="get">
+                    <button type="submit" class="btn btn-success btn-sm">All Task</button>
+                </form>
+            </div>
+            <div class="col-lg-2">
+                <form id ="create" action="{{route('show.create-user')}}" method="get">
+                    <button type="submit" class="btn btn-danger btn-sm">New User</button>
+                </form>
+            </div>
+            <div class="col-lg-8"></div>
         </div>
         <br>
         <div>
             <form action="" method="get">
-                <input type="text" name="search" placeholder="Search..." value="{{request()->search ?? ''}}">
-                <input type="submit" value="Search">
+                <input type="text" name="search" placeholder="Search by name..." value="{{request()->search ?? ''}}">
+                {{-- <input type="submit" value="Search"> --}}
+                <button type="submit" class="btn btn-outline-success btn-sm">Search</button>
             </form>
         </div>
         <br>

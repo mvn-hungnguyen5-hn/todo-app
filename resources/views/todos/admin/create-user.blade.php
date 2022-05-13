@@ -33,9 +33,13 @@
                 <div class="text-danger">{{ $message }}</div>
               @enderror
             </div> 
+            
             <div class="form-group">
                 <label for="level">Type Account:</label>
-                <input class="form-control" id ="level" name="level" value="{{ old('level') }}">
+                <select class="form-control" id="level" name="level">
+                  <option value="0">Base Account </option>
+                  <option value="1">Admin</option>
+              </select>
                 @error('level')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror

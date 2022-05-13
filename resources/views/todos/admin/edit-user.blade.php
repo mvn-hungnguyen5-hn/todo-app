@@ -36,9 +36,15 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="level">Type Account:</label>
-            <input class="form-control" id ="level" name="level" value="{{$user->level}}">
-        </div>           
+          <label for="level">Type Account:</label>
+          <select class="form-control" id="level" name="level">
+            <option value="0" @if ($user->level == '0' )  selected  @endif>Base Account </option>
+            <option value="1" @if ($user->level == '1' )  selected  @endif>Admin</option>
+          </select>
+          @error('level')
+          <div class="text-danger">{{ $message }}</div>
+          @enderror
+        </div>  
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>

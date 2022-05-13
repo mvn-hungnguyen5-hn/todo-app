@@ -18,10 +18,13 @@
         </div>
         @endif
         <h1>List task of user</h1>
-        <div>
-            <form id ="logout" action="{{route('logout')}}" method="get">
-                <button type="submit" class="btn btn-success">Logout</button>
-            </form>
+        <div class="row">
+            <div class="col-lg-10"></div>
+            <div class="col-lg-2">
+                <form id ="logout" action="{{route('logout')}}" method="get">
+                    <button type="submit" class="btn btn-secondary btn-sm">Logout</button>
+                </form>
+            </div>
         </div>
         <br>
         <div>

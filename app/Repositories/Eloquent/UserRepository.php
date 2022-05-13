@@ -43,7 +43,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $searchCondition = $request->input('search');
 
         $query = DB::table('users')
-        ->leftJoin('todos','users.id', '=', 'todos.user_id')
+        ->join('todos','users.id', '=', 'todos.user_id')
         ->select('users.id as id_user' ,'users.name as user_name', 'todos.id as id_task', 'todos.name as task_name');
         if($request->search){
             $query->where('users.name', 'like', '%' . $searchCondition . '%')

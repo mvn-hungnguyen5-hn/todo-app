@@ -10,7 +10,7 @@
 <body>
 
     <div class="container">
-        <h1>Create</h1>
+        <h1>Create new task</h1>
         <form action="{{ route('todos.store')}}" class="was-validated" method="POST">
             @csrf
             <div class="form-group">

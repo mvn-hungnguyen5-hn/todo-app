@@ -5,6 +5,7 @@ namespace App\Repositories\Eloquent;
 use App\Repositories\Interfaces\TodoRepositoryInterface;
 use App\Repositories\Eloquent\BaseRepository;
 use App\Models\Todo;
+use Illuminate\Support\Facades\Auth;
 
 class TodoRepository extends BaseRepository implements TodoRepositoryInterface
 {
@@ -24,6 +25,7 @@ class TodoRepository extends BaseRepository implements TodoRepositoryInterface
     {
         $searchCondition = $request->input('search');
         $query = $this->model->select('todos.*');
+        $query->where('user_id', Auth::user()->id);
         if($request->search) {
             $query->where('name', 'like', '%' . $searchCondition . '%')
                 ->orWhere('description', 'like', '%' . $searchCondition . '%');

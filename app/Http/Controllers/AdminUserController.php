@@ -7,7 +7,6 @@ use App\Models\Todo;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserPostRequest;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use Exception;
 class AdminUserController extends Controller
 {
     private $userRepository;
@@ -23,7 +22,7 @@ class AdminUserController extends Controller
     }
     public function showCreateUserForm()
     {
-        return view ('todos.admin.create-user');
+        return view('todos.admin.create-user');
     }
     public function processUserRegister(UserPostRequest $request)
     {
@@ -32,34 +31,65 @@ class AdminUserController extends Controller
         $user->email = $request->email;
         $user->level = $request->level;
         $user->password = bcrypt($request->input('password'));
-        $user->save();
-        return redirect()->route('admin.index');
+        try{
+            $user->save(); 
+        }catch(\Exception $exeption){
+            return redirect()->route('admin.index')->with('error', 'Đăng kí tài khoản thất bại');
+        }
+        return redirect()->route('admin.index')->with('success', 'Đăng kí tài khoản thành công');
     }
     public function showEditUserForm($id)
     {
         $user = User::find($id);
-        return view('todos.admin.edit-user', compact('user'));
+        if($user){
+            return view('todos.admin.edit-user', compact('user'));
+        }else{
+            return redirect()->back()->with('error', 'User không tồn tại');
+        }
     }
     public function update(UserPostRequest $request, $id)
     {
-        $user = User::find($id);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->level = $request->input('level');
-        $user->password = bcrypt($request->input('password'));
-        $user->save();
-        return redirect()->route('admin.index');
+        try{
+            $user = User::find($id);
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->level = $request->input('level');
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
+        }catch(\Exception $exeption)
+        {
+            return redirect()->route('admin.index')->with('error', 'Chỉnh sửa tài khoản không tồn tại');
+        }
+        return redirect()->route('admin.index')->with('success','Edit tài khoản thành công');
     }
-    public function destroy($id){
-        $user = User::find($id);
-        $user->delete();
-        return redirect()->route('admin.index');
+    public function destroy($id)
+    {
+        //xóa task user và xóa các user
+        $todo = Todo::where('user_id',$id);
+        Todo::where('user_id',$id)->delete();    
+        try{
+            $user = User::find($id);
+            if($user){
+                $user->delete();
+            }else{
+                return redirect()->route('admin.index')->with('error', 'Tài khoản không tồn tại');
+            }
+        
+        }catch(\Exception $exeption){
+            return redirect()->route('admin.index')->with('error', 'Xóa tài khoản không thành công');
+        } 
+        return redirect()->route('admin.index')->with('success','Xóa tài khoản thành công');;
     }
 
     public function show($id)
     {
         $user = User::find($id);
-        return view('todos.admin.show-user', compact('user'));
+        if($user){
+            return view('todos.admin.show-user', compact('user'));
+        }else{
+            return redirect()->back()->with('error', 'User không tồn tại');
+        }
+        
     }
 
     //'getAllTask'])->name('admin.all-task');
@@ -71,13 +101,12 @@ class AdminUserController extends Controller
 
     //destroy task by task id
     public function processDestroyUserTask($id = null)
-    {     
+    {
         $task = Todo::find($id);
-        if(!$task){
+        if (!$task) {
             return redirect()->back()->with('error', 'Task không tồn tại');
         }
         $task->delete();
         return redirect()->back()->with('success', 'Xóa task thành công');
     }
 }
-
