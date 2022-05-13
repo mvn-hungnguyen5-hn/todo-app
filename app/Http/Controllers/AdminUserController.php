@@ -7,6 +7,7 @@ use App\Models\Todo;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserPostRequest;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+
 class AdminUserController extends Controller
 {
     private $userRepository;
@@ -31,9 +32,9 @@ class AdminUserController extends Controller
         $user->email = $request->email;
         $user->level = $request->level;
         $user->password = bcrypt($request->input('password'));
-        try{
-            $user->save(); 
-        }catch(\Exception $exeption){
+        try {
+            $user->save();
+        } catch (\Exception $exeption) {
             return redirect()->route('admin.index')->with('error', 'Đăng kí tài khoản thất bại');
         }
         return redirect()->route('admin.index')->with('success', 'Đăng kí tài khoản thành công');
@@ -41,55 +42,52 @@ class AdminUserController extends Controller
     public function showEditUserForm($id)
     {
         $user = User::find($id);
-        if($user){
+        if ($user) {
             return view('todos.admin.edit-user', compact('user'));
-        }else{
+        } else {
             return redirect()->back()->with('error', 'User không tồn tại');
         }
     }
     public function update(UserPostRequest $request, $id)
     {
-        try{
+        try {
             $user = User::find($id);
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->level = $request->input('level');
             $user->password = bcrypt($request->input('password'));
             $user->save();
-        }catch(\Exception $exeption)
-        {
+        } catch (\Exception $exeption) {
             return redirect()->route('admin.index')->with('error', 'Chỉnh sửa tài khoản không tồn tại');
         }
-        return redirect()->route('admin.index')->with('success','Edit tài khoản thành công');
+        return redirect()->route('admin.index')->with('success', 'Edit tài khoản thành công');
     }
     public function destroy($id)
     {
         //xóa task user và xóa các user
-        $todo = Todo::where('user_id',$id);
-        Todo::where('user_id',$id)->delete();    
-        try{
+        $todo = Todo::where('user_id', $id);
+        Todo::where('user_id', $id)->delete();
+        try {
             $user = User::find($id);
-            if($user){
+            if ($user) {
                 $user->delete();
-            }else{
+            } else {
                 return redirect()->route('admin.index')->with('error', 'Tài khoản không tồn tại');
             }
-        
-        }catch(\Exception $exeption){
+        } catch (\Exception $exeption) {
             return redirect()->route('admin.index')->with('error', 'Xóa tài khoản không thành công');
-        } 
-        return redirect()->route('admin.index')->with('success','Xóa tài khoản thành công');;
+        }
+        return redirect()->route('admin.index')->with('success', 'Xóa tài khoản thành công');;
     }
 
     public function show($id)
     {
         $user = User::find($id);
-        if($user){
+        if ($user) {
             return view('todos.admin.show-user', compact('user'));
-        }else{
+        } else {
             return redirect()->back()->with('error', 'User không tồn tại');
         }
-        
     }
 
     //'getAllTask'])->name('admin.all-task');
