@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Mail\MailNotify;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class SendEmail implements ShouldQueue
 {
@@ -22,10 +22,9 @@ class SendEmail implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($data, $users)
+    public function __construct($data)
     {
         $this->data = $data;
-        $this->users = $users;
     }
 
     /**
@@ -35,8 +34,6 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
-        foreach ($this->users as $user) {
-            Mail::to($user->email)->send(new MailNotify($this->data));
-        }
+        Mail::to('hungking98@gmail.com')->send(new MailNotify($this->data));
     }
 }

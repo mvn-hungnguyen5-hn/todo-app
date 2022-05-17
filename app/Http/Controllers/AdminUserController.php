@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Todo;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserPostRequest;
+use App\Jobs\SendEmail;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 
 class AdminUserController extends Controller
@@ -34,6 +35,8 @@ class AdminUserController extends Controller
         $user->password = bcrypt($request->input('password'));
         try {
             $user->save();
+            //tạo Job gửi mail đưa vào queue, thời gian delay xử lí là 5 phút
+            SendEmail::dispatch($user)->delay(now()->addMinute(5));
         } catch (\Exception $exeption) {
             return redirect()->route('admin.index')->with('error', 'Đăng kí tài khoản thất bại');
         }
