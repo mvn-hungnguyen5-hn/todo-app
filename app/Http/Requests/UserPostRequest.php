@@ -25,7 +25,7 @@ class UserPostRequest extends FormRequest
     {
         return [
             'name' => 'required|min:5|max:15',
-            'email' => 'required',
+            'email' => 'required|email| unique:users,email,'.$this->id,
             'password' => 'required|min:6|max:12',
             'level' =>'required'
         ];
@@ -36,7 +36,11 @@ class UserPostRequest extends FormRequest
         return [
             'name.required' => 'Tên đăng nhập bắt buộc nhập',
             'email.required' => 'Email bắt buộc nhập',
+            'email.email' => 'Email phải có định dạng đúng',
+            'email.unique' => 'Email phải là duy nhất',
             'password.required' => 'Password bắt buộc nhập',
+            'password.min' => 'Password tối thiểu 6 kí tự',
+            'password.max' => 'Password tối đa 12 kí tự',
             'level.required' => "Kiểu account bắt buộc nhập"
         ];
     }

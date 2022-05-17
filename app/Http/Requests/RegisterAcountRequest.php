@@ -25,8 +25,9 @@ class RegisterAcountRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|min:10|max:30',
-            'password' => 'required'
+            'email' => 'required|email|min:10|max:30',
+            'password' => 'required',
+            'repassword' => 'same:password'
             
         ];
     }
@@ -34,10 +35,12 @@ class RegisterAcountRequest extends FormRequest
     {
         return [
             'name.required' => 'Tên đăng nhập là bắt buộc',
+            'email.email' => 'Phải đúng định dạng email',
             'email.required' => 'Email bắt buộc nhập',
             'email.min' => 'Email tối thiểu 10 kí tự',
             'email.max' => 'Email tối đa 30 kí tự',
-            'password.required' => 'Password bắt buộc nhập'
+            'password.required' => 'Password bắt buộc nhập',
+            'repassword.same' => 'Password và password confirm phải giống nhau'
         ];
     }
 }

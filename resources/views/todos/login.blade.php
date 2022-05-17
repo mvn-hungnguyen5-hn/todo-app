@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{{asset('js/main.js') }}"></script> 
     <title>Login</title>
 </head>
 <body>
@@ -38,20 +42,20 @@
                     <div class="text-danger">{{ $message }}</div>
                   @enderror
                   <input type="text" id="name" name ="name" class="form-control form-control-lg"
-                    placeholder="Enter a valid username" />
+                    placeholder="Enter a valid username" value="{{old('name')}}"/>
                   <label class="form-label" for="name">Username</label>
                 </div>
       
                 <!-- Password input -->
-                <div class="form-outline mb-3">
+                <div class="form-outline mb-3 togger">
                   @error('password')
                     <div class="text-danger">{{ $message }}</div>
                   @enderror
                   <input type="password" id="password" name = "password" class="form-control form-control-lg"
                     placeholder="Enter password" />
+                  </button>
                   <label class="form-label" for="password">Password</label>
                 </div>
-      
                 <div class="d-flex justify-content-between align-items-center">
                 </div>
       

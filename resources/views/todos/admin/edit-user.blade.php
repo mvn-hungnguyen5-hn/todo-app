@@ -18,21 +18,21 @@
           <label for="uname">Name:</label>
           <input type="text" class="form-control" id="" placeholder="name" value="{{$user->name}}" name="name">
           @error('name')
-            <div class="error">{{ $message }}</div>
+            <div class="text-danger">{{ $message }}</div>
           @enderror
         </div>
         <div class="form-group">
           <label for="pwd">Email:</label>
           <input class="form-control" id="" placeholder="Email" name="email" value="{{$user->email}}">
           @error('email')
-            <div class="error">{{ $message }}</div>
+            <div class="text-danger">{{ $message }}</div>
           @enderror
 
           <div class="form-group">
             <label for="pwd">Password:</label>
             <input class="form-control" id="" placeholder="Password" name="password" value="">
             @error('password')
-              <div class="error">{{ $message }}</div>
+              <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group">

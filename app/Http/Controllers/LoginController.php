@@ -7,7 +7,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterAcountRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
 class LoginController extends Controller
 {
     //show form dang nhap
@@ -22,16 +21,19 @@ class LoginController extends Controller
             'name' => $request->name,
             'password' => $request->password,
         ];
-
         if(Auth::attempt($data) && Auth::user()->level == '1'){
+
+            session(['user_name' => Auth::user()->name]);
             return redirect(route('admin.index'));
             
         }else if(Auth::attempt($data) && Auth::user()->level == '0')
         {
+            session(['user_name' => Auth::user()->name]);
             return redirect(route('todos.index'));
             
         }else{
             //can not login
+            $request->flash();
             return redirect()->back()->with('error', 'Tài khoản hoặc mật khẩu không đúng');
         }
 
@@ -59,6 +61,7 @@ class LoginController extends Controller
     //xu li logout
     public function logout()
     {
+        session()->forget('user_name');
         Auth::logout();
         return redirect(route('login'));
     }

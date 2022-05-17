@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login-test', function () {
     return view('todos.login-test');
 });
-Route::get('login', [LoginController::class, 'showLoginForm']);
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('show.login')->middleware('check.route.login');
 Route::post('login', [LoginController::class, 'processLogin'])->name('login');
 Route::get('register', [LoginController::class, 'showRegisterForm'])->name('show.register');
 Route::post('register',[LoginController::class, 'processRegister'])->name('register');

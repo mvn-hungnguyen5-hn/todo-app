@@ -7,7 +7,7 @@
     <title>Detail User</title>
 </head>
 <body>
-    <h1>View user infomation</h1>
+    <h1>View user information</h1>
     @if ($message = Session::get('error'))
         <div class="alert alert-danger alert-block"> 
          <strong>{{ $message }}</strong>

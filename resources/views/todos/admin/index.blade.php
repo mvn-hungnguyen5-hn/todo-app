@@ -7,7 +7,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>List User</h1>
+        <div class="row">
+            <div class="col-lg-3">
+                <h1>List User</h1>
+            </div>
+            <div class="col-lg-6"></div>
+            <div class="col-lg-3 text-danger">Xin chào admin {{Session::get('user_name')}}</div>
+        </div>
                 @if ($message = Session::get('error'))
                     <div class="alert alert-danger alert-block"> 
                      <strong>{{ $message }}</strong>

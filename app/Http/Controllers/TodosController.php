@@ -105,6 +105,7 @@ class TodosController extends Controller
             if($todo){
               $todo->name = $data['name'];
               $todo->description = $data['description'];
+              $todo->completed = $data['completed'];
               $todo->save();  
             }else{
                 return redirect()->route('todos.index')->with('error', 'Không tìm thấy task');

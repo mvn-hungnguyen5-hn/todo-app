@@ -52,13 +52,18 @@ class AdminUserController extends Controller
     {
         try {
             $user = User::find($id);
-            $user->name = $request->input('name');
+            if($user){
+               $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->level = $request->input('level');
             $user->password = bcrypt($request->input('password'));
-            $user->save();
+            $user->save(); 
+            }else{
+                return redirect()->route('admin.index')->with('error', 'Chỉnh sửa tài khoản không tồn tại');
+            }
+            
         } catch (\Exception $exeption) {
-            return redirect()->route('admin.index')->with('error', 'Chỉnh sửa tài khoản không tồn tại');
+            return redirect()->route('admin.index')->with('error', 'Chỉnh sửa tài khoản không thành công');
         }
         return redirect()->route('admin.index')->with('success', 'Edit tài khoản thành công');
     }

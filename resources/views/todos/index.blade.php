@@ -7,7 +7,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>My task list</h1>
+        <div class="row">
+            <div class="col-lg-3">
+                <h1>My task list</h1>
+            </div>
+            <div class="col-lg-7"></div>
+            <div class="col-lg-2 text-danger">Xin chào {{Session::get('user_name')}}</div>
+        </div>
         @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block"> 
             <strong>{{ $message }}</strong>
