@@ -40,7 +40,7 @@ class AdminUserController extends Controller
         } catch (\Exception $exeption) {
             return redirect()->route('admin.index')->with('error', 'Đăng kí tài khoản thất bại');
         }
-        return redirect()->route('admin.index')->with('success', 'Đăng kí tài khoản thành công');
+        return redirect()->route('admin.index')->with('success', 'Đăng kí tài khoản và gửi mail thành công');
     }
     public function showEditUserForm($id)
     {

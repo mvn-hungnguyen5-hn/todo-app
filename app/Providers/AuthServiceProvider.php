@@ -24,7 +24,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
+        //xác thực user phải là tài khoản thường
+        Gate::define('view-list-task', function($user){
+            return $user->level == '0';
+        });
     }
 }

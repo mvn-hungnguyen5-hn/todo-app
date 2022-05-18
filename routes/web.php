@@ -25,7 +25,7 @@ Route::post('login', [LoginController::class, 'processLogin'])->name('login');
 Route::get('register', [LoginController::class, 'showRegisterForm'])->name('show.register');
 Route::post('register',[LoginController::class, 'processRegister'])->name('register');
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
-Route::resource('todos', TodosController::class)->middleware('verify.login');
+Route::resource('todos', TodosController::class)->middleware(['verify.login','can:view-list-task']);
 Route::group(['prefix'=>'admin', 'middleware' => ['verify.login', 'check.role.admin']],function(){
     Route::get('list-user', [AdminUserController::class, 'index'])->name('admin.index');
     Route::get('create-user', [AdminUserController::class, 'showCreateUserForm'])->name('show.create-user');
