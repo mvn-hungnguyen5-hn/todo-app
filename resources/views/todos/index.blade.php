@@ -6,6 +6,7 @@
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 </head>
 <body>
+     {{-- <h1>{{dd(Auth::user())}}</h1> --}}
     <div class="container">
         <div class="row">
             <div class="col-lg-3">

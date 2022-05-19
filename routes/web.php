@@ -37,3 +37,6 @@ Route::group(['prefix'=>'admin', 'middleware' => ['verify.login', 'check.role.ad
     Route::get('all-user-task', [AdminUserController::class, 'getAllTask'])->name('admin.all-task');
     Route::delete('delete-user-task/{id?}',[AdminUserController::class, 'processDestroyUserTask'])->name('admin.destoy-task');
 });
+
+Route::get('api/get-google-sign-in-url', [\App\Http\Controllers\Api\GoogleController::class, 'getGoogleSignInUrl'])->name('api.google.login');
+Route::get('api/callback', [\App\Http\Controllers\Api\GoogleController::class, 'loginCallback']);
